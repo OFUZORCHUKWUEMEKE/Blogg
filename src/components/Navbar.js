@@ -1,3 +1,4 @@
+import { gql, useQuery } from '@apollo/client'
 import React, { useEffect, useState ,useContext} from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../AuthProvider'
@@ -8,14 +9,15 @@ import BasicModal from './Modal'
 
 const Navbar = () => {
   const [open, setOpen] =useState(false);
-
+  const { client,loading, data: { getPosts: posts } = {},error } = useQuery(FETCHPOST,{ fetchPolicy: "network-only" })
   const [post, setPost] = useState()
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-  const {dispatch} = useContext(AuthContext)
+  const {dispatch} = useContext(AuthContext) 
 
   const logout = async(e)=>{
     dispatch({type:"LOGOUT"})  
     setUser(null)
+    await client.clearStore()
   }
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -46,4 +48,22 @@ const Navbar = () => {
     </>
   )
 }  
+const FETCHPOST = gql`
+  {
+    getPosts{
+    id
+    username
+    body
+    title
+    comments {
+      body
+    }
+    createdAt
+    likes {
+      username
+    }
+    slug
+  }
+  }
+`
 export default Navbar;

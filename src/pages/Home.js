@@ -107,7 +107,8 @@ const Home = () => {
                     <Grid container spacing={3} justifyContent='space-between' alignItems='center'>    
                         {posts?.map((post)=>(
                            <Grid item xs={12} md={4} key={post.id}>
-                               <Link to={`/blog/${post.username}/${post.slug}`}><MediaCard post={post}/></Link>                           
+                               {/* <Link to={`/blog/${post.username}/${post.slug}`}></Link>                            */}
+                               <MediaCard post={post}/>
                           </Grid>
                         ))}                            
                     </Grid>
@@ -136,6 +137,7 @@ const FETCHPOST = gql`
     comments {
       body
     }
+    createdAt
     likes {
       username
     }

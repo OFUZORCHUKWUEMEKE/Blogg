@@ -16,19 +16,19 @@ import EditorProvider from "./Editor/EditorProvider";
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
+  const token = JSON.parse(localStorage.getItem('token'));
   console.log(token)
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : "", 
     }
   }
 });
 
 const link = createHttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: 'http://localhost:4000/graphql', 
   credentials: 'same-origin'
 });
 

@@ -31,7 +31,7 @@ function App() {
         <Route  path='/login' element={<Login/>}/> 
         <Route  path='/register' element={<Register/>}/>
         <Route  path='/blog/:username/:slug' element={<Blogpage/>}/>
-        {token && <Route path='/create' element={<CreatePost/>}/>} 
+        {token && <Route path='/create' element={<CreatePost/>}/>}   
       </Routes>
    
   );

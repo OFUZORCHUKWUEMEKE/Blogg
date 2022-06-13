@@ -31,7 +31,7 @@ const CreatePost = () => {
         update(_,{data}){
             console.log(data)
         },
-        variables:{body:html,title:title,coverPhoto:url} 
+        variables:{body:html,title:title,coverPhoto:url}
     })
 
     const uploadImage = async(e) =>{
@@ -51,8 +51,23 @@ const CreatePost = () => {
     }
 
     const Submit = async ()=>{
+        // const token = JSON.parse(localStorage.getItem('token'))
+        // const config = {
+        //     headers:{
+        //         'Content-Type': 'application/json',
+        //         "Authorization":`Bearer ${token}`
+        //     }
+        // }
+        // const data ={
+        //     coverPhoto:url,
+        //     body:html,
+        //     title
+        // }
+        // console.log(token)
+        // const res = await axios.post('http://localhost:4000/createpost',data,config)
+        // console.log(res)
         create()
-    }
+    } 
     return (
         <>
             <div className='bg-[#171d24] min-h-screen'>
@@ -99,12 +114,14 @@ const CreatePost = () => {
     )
 }
 
+
 const CREATEPOST = gql`
 mutation($body: String!, $title: String!, $coverPhoto: String!){
   createPost(body: $body, title: $title, coverPhoto: $coverPhoto) {
     id
     isPublished
     username
+    body
   }
 }
 

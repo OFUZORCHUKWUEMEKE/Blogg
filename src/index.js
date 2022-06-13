@@ -8,7 +8,7 @@ import { theme } from './theme';
 import ApolloProvider from './Apolloprovider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-
+     
     // <ThemeProvider theme={theme}>
       ApolloProvider
 
