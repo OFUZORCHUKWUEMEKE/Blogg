@@ -4,7 +4,7 @@ const User = require("../../model/User")
 const checkAuth = require('../../utils/auth')
 const slugify = require('slugify')
 module.exports = {
-    Query: {
+    Query: { 
         getPosts: async () => {
             const post = await Post.find()
 
@@ -18,7 +18,34 @@ module.exports = {
             const post = await Post.findById(id)
             return post
         },
-        createPost: async (_, { body: { body, title, coverPhoto } }, context) => {
+    },
+    Mutation: {
+        userPosts: async (_, { id }) => {
+            const userPost = await Post.find({ user: { $elemMatch: { $eq: id } } })
+            return userPost
+        },
+        likePost: async (_, { postid }, context) => {
+            const { username } = checkAuth(context)
+            if (!username) { 
+                throw new AuthenticationError('You are not Authenticated')
+            }
+            const poste = await Post.findById(postid)
+            const post = await Post.findOne({ _id: postid }, { likes: { $elemMatch: { username: username } } })
+
+            if (post.likes.length === 0){
+                const like = {
+                    username: username,
+                    createdAt: new Date().toISOString()
+                }
+                const liked = await Post.findByIdAndUpdate(postid, { $push: { likes: like } })
+
+            } else {
+                const liked = await Post.findByIdAndUpdate(postid, { $pull: { likes: { username: username } } })
+                console.log(liked)
+            }
+            return poste 
+        },
+        createPost: async (_, { body, title, coverPhoto }, context) => {
             const { username } = checkAuth(context)
             const userr = User.findOne({ username: username })
             if (!username) {
@@ -35,38 +62,10 @@ module.exports = {
                 coverPhoto
             })
             await post.save()
-            // const user = await User.find({username}).populate('post').exec((err,user)=>console.log(`the username is ${user.post.username}`))
-            // userr.post.push(post)
+           
              const result = await User.findOneAndUpdate({username},{$push:{post}})
             console.log(result)         
-          return post
-        }
-    },
-    Mutation: {
-        userPosts: async (_, { id }) => {
-            const userPost = await Post.find({ user: { $elemMatch: { $eq: id } } })
-            return userPost
-        },
-        likePost: async (_, { postid }, context) => {
-            const { username } = checkAuth(context)
-            if (!username) { 
-                throw new AuthenticationError('You are not Authenticated')
-            }
-            const poste = await Post.findById(postid)
-            const post = await Post.findOne({ _id: postid }, { likes: { $elemMatch: { username: username } } })
-
-            if (post.likes.length === 0) {
-                const like = {
-                    username: username,
-                    createdAt: new Date().toISOString()
-                }
-                const liked = await Post.findByIdAndUpdate(postid, { $push: { likes: like } })
-
-            } else {
-                const liked = await Post.findByIdAndUpdate(postid, { $pull: { likes: { username: username } } })
-                console.log(liked)
-            }
-            return poste
+          return post 
         },
         createComment: async (_, { postid, body }, context) => {
             const { username } = checkAuth(context)
@@ -81,14 +80,19 @@ module.exports = {
             return post
         },
         deletePost: async (_, { postid }, context) => {
+
             const { username, id } = checkAuth(context)
+
             const posts = await Post.findById(postid)
-            
-            const user =  await User.findOneAndUpdate({username},{$pull:{post:postid}})
 
-            const result = await user.save()
+            if(posts.username == username){
+                const user =  await User.findOneAndUpdate({username},{$pull:{post:postid}})
 
-            await Post.findByIdAndRemove(postid)
+                const result = await user.save()
+    
+                await Post.findByIdAndRemove(postid)
+            }
+            console.log(posts.username)
 
             return "Successfully Deleted"
         },

@@ -22,6 +22,7 @@ const PostSchema = new mongoose.Schema({
             createdAt:String
         }
     ],
+    isPublished:{type:Boolean,default:false}
    
 })
 

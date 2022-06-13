@@ -50,7 +50,6 @@ type Post{
        getPosts:[Post!]
        getPost(id:ID!):Post!
        deletePost:String!
-       createPost(body:Body):Post!
        getUsers:[User]!
        getUser(username:String!):User!
    }
@@ -65,6 +64,8 @@ type Post{
        deleteComment(postId:ID!,commentId:ID!):String! 
        findPost(slug:String!,username:String!):Post! 
        deleteUsers:String!
+       createPost(body:String,title:String!,coverPhoto:String!):Post!
+       
    }
    
    
