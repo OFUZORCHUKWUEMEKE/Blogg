@@ -15,9 +15,10 @@ import { Link } from 'react-router-dom';
 
 
 export default function MediaCard({ post }) {
+    console.log(post)
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
-        <Card sx={{ maxWidth: 345, cursor: "pointer"}}>
+        <Card sx={{ maxWidth: 345, cursor: "pointer",backgroundColor:"#1F2937",color:"white",padding:"15px 0px"}}>
             <div className='flex space-x-2 items-center w-[90%] mx-auto p-2'>
                 <Avatar alt={post.username} sx={{ cursor: 'pointer' }} src="/static/images/avatar/1.jpg" />
                 <p className='font-bold font-mono text-[18px]'>{post.username}</p>
@@ -33,22 +34,23 @@ export default function MediaCard({ post }) {
             </CardContent>
             <CardMedia
                 component="img"
-                height="140"
-                image="/img/home.svg"
+                // height="140"
+                image={post.coverPhoto}
                 alt="green iguana"
-                sx={{width:"85%",margin:"auto"}}
+              
+                sx={{width:"85%",margin:"auto",height:"200px",objectFit:'cover'}}
             />
+             {/* <img src={post.coverPhoto} alt="" className=''/> */}
 
             <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: "65%", margin: "auto" }}>
-                <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-                <Checkbox
+                <Checkbox {...label} icon={<FavoriteBorder />}    className='text-white bg-white'  checkedIcon={<Favorite />} />
+                <Checkbox 
+                className='text-white bg-white' 
                     {...label}
                     icon={<BookmarkBorderIcon />}
-                    checkedIcon={<BookmarkIcon />}
+                    checkedIcon={<BookmarkIcon />} 
                 />
             </Stack>
-
-
         </Card>
     );
 }

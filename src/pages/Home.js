@@ -104,7 +104,7 @@ const Home = () => {
                         <h2 className='text-[14px] font-mono text-white font-bold'>From the Community</h2>
                         <h2 className='text-[22px] font-mono text-[#3366ff] font-extrabold'>Latest Article</h2>
                     </Stack>
-                    <Grid container spacing={3} justifyContent='space-between' alignItems='center'>    
+                    <Grid container spacing={3} justifyContent='space-between' alignItems='center' className='py-6'>    
                         {posts?.map((post)=>(
                            <Grid item xs={12} md={4} key={post.id}>
                                {/* <Link to={`/blog/${post.username}/${post.slug}`}></Link>                            */}
@@ -122,7 +122,7 @@ const Home = () => {
                         </Stack>
                     </div>
                 </div>
-                <Footer />
+                <Footer/>
             </div>
         </>
     )
@@ -133,6 +133,7 @@ const FETCHPOST = gql`
     id
     username
     body
+    coverPhoto
     title
     comments {
       body
@@ -145,4 +146,4 @@ const FETCHPOST = gql`
   }
   }
 `
-export default Home
+export default Home;
