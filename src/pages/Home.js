@@ -12,7 +12,6 @@ import MediaCard from '../components/Card'
 const Home = () => {
     const { loading, data: { getPosts: posts } = {},error } = useQuery(FETCHPOST)
     const [post,setPost] = useState()
-    // const [user,setUser] = useState(JSON.parse(localStorage.getItem('user')))
     console.log(posts)
 
     if(loading || error) return (
@@ -25,10 +24,10 @@ const Home = () => {
                         <div>
                             <Stack spacing={3}>
                                 <h1 className='text-white text-[40px]'>A Social <span className='text-[#3366ff]'>Blogging</span> Platform</h1>
-                                <h3 className='text-white text-[25px]'>The hassle-free blogging platform for Content-Creators, thought-leaders,engineers and the dev community!</h3>
+                                <h3 className='text-white text-[25px]'>The hassle-free blogging platform for Content-Creators,<br/>thought-leaders,engineers and the dev community!</h3>
                                 <h3 className='text-white text-[23px]'>Share Your Experience / Journey</h3>
                                 <Link to='/register'><span className='rounded-[50px] mb-4  cursor-pointer py-3 px-6 bg-[#3466f6] text-center text-white w-[30%]'>Get Started</span></Link>
-                            </Stack> 
+                            </Stack>   
                         </div>
                     </Grid> 
                     <Grid item xs={12} md={6}>
@@ -43,7 +42,7 @@ const Home = () => {
                 <h2 className='text-[22px] font-mono text-[#3366ff] font-extrabold'>Latest Article</h2>
             </Stack>
             <Grid container spacing={3} justifyContent='space-between' alignItems='center'>                      
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={4}>  
                     <Facebook/>
                 </Grid>
                 <Grid item xs={12} md={4}>
@@ -81,20 +80,21 @@ const Home = () => {
             <div className='bg-[#171d24] min-h-screen'>
                 <div>
                     <Navbar />
-                    <div className='w-4/5 mx-auto grid place-items-center h-[80vh]'>
+                    <div className='w-[90%] mx-auto grid place-items-center h-[80vh]'>
                         <Grid container spacing={2} justifyContent='space-between' alignItems='center'>
                             <Grid item xs={12} md={6}>
                                 <div>
                                     <Stack spacing={3}>
                                         <h1 className='text-white text-[40px]'>A Social <span className='text-[#3366ff]'>Blogging</span> Platform</h1>
-                                        <h3 className='text-white text-[25px]'>The hassle-free blogging platform for Content-Creators, thought-leaders,engineers and the dev community!</h3>
-                                        <h3 className='text-white text-[23px]'>Share Your Experience / Journey</h3>
+                                        <h3 className='text-white text-[25px]'>The hassle-free blogging platform for Content-Creators, <br/> thought-leaders,engineers and the dev community!</h3>
+                                        <p className='text-white text-[23px]'>Share Your Experience / Journey</p>
+                                        <p></p>
                                         <Link to='/register'><span className='rounded-[50px] mb-4  cursor-pointer py-3 px-6 bg-[#3466f6] text-center text-white w-[30%]'>Get Started</span></Link>
                                     </Stack>
-                                </div>
+                                </div>   
                             </Grid>
-                            <Grid item xs={12} md={6}>
-                                <img src="/img/home.svg" className='object-cover' />
+                            <Grid item xs={12} md={6}>  
+                                <img src="/img/home.svg" className='object-cover'/>
                             </Grid>
                         </Grid>
                     </div>
@@ -103,11 +103,10 @@ const Home = () => {
                     <Stack alignItems='center' spacing={2} className='text-center'>
                         <h2 className='text-[14px] font-mono text-white font-bold'>From the Community</h2>
                         <h2 className='text-[22px] font-mono text-[#3366ff] font-extrabold'>Latest Article</h2>
-                    </Stack>
+                    </Stack>  
                     <Grid container spacing={3} justifyContent='space-between' alignItems='center' className='py-6'>    
                         {posts?.map((post)=>(
-                           <Grid item xs={12} md={4} key={post.id}>
-                               {/* <Link to={`/blog/${post.username}/${post.slug}`}></Link>                            */}
+                           <Grid item xs={12} md={4} key={post.id}>                             
                                <MediaCard post={post}/>
                           </Grid>
                         ))}                            

@@ -15,7 +15,7 @@ import { deepOrange } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 
 
-export default function MediaCard({ post }) {
+export default function Media({ post }) {
     console.log(post)
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
@@ -27,7 +27,7 @@ export default function MediaCard({ post }) {
             <CardContent sx={{ padding: "20px 0px", width: '90%', margin: "auto" }}>
                 <Stack spacing={2}>
                     <Typography gutterBottom variant="h6" component="div">
-                       <Link to={`/blog/${post.username}/${post.slug}/${post.id}`} className='hover:text-[#3366ff] font-mono
+                       <Link to={`/blog/${post.username}/${post.slug}/${post._id}`} className='hover:text-[#3366ff] font-mono
                        '>{post.title}</Link> 
                     </Typography>
                 </Stack> 

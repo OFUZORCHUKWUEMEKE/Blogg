@@ -29,20 +29,20 @@ const Register = () => {
     onError(err) {
       console.log(err.graphQLErrors[0].message)
       setErrors(err.graphQLErrors[0].message)
-      toast.error(errors, {
+      toast.error(errors, { 
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
+        progress: undefined,  
       })
     },
     variables: values
   })
   const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value })
+    setValues({ ...values, [e.target.name]: e.target.value })  
   }
   const handleSubmit = async (e) => {
     await setLoading(true)

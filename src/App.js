@@ -14,6 +14,7 @@ import CreatePost from "./pages/CreatePost";
 import React, { useEffect, useState } from "react";
 // import Login from "./pages/Log";
 import {useNavigate} from 'react-router-dom'
+import User from "./pages/User";
 function App() {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')))
   const navigate = useNavigate()
@@ -30,7 +31,8 @@ function App() {
         <Route exact path='/' element={<Home/>}/>
         <Route  path='/login' element={<Login/>}/> 
         <Route  path='/register' element={<Register/>}/>
-        <Route  path='/blog/:username/:slug' element={<Blogpage/>}/>
+        <Route  path='/blog/:username/:slug/:id' element={<Blogpage/>}/>
+        <Route path='/:username' element={<User/>}/>
         {token && <Route path='/create' element={<CreatePost/>}/>}   
       </Routes>
    

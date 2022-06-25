@@ -13,6 +13,7 @@ import App from "./App";
 import { BrowserRouter as Router } from 'react-router-dom'
 import { AuthProvider } from "./AuthProvider";
 import EditorProvider from "./Editor/EditorProvider";
+import BlogProvider from "./BlogContext";
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -22,13 +23,13 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "", 
+      authorization: token ? `Bearer ${token}` : "",
     }
   }
 });
 
 const link = createHttpLink({
-  uri: 'http://localhost:4000/graphql', 
+  uri: 'http://localhost:4000/graphql',
   credentials: 'same-origin'
 });
 
@@ -42,11 +43,13 @@ export default (
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
       <AuthProvider>
-        <EditorProvider>
-          <Router>
-            <App />
-          </Router>
-        </EditorProvider>
+        <BlogProvider>
+          <EditorProvider>
+            <Router>
+              <App />
+            </Router>
+          </EditorProvider>
+        </BlogProvider>
       </AuthProvider>
     </ThemeProvider>
   </ApolloProvider>

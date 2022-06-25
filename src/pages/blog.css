@@ -1,0 +1,12 @@
+.blog p{
+    word-break: break-all;
+    white-space: normal;
+
+}
+
+.blog img{
+    width:100%;
+    height:400px;
+    object-fit: contain;
+    padding: 20px;
+}
