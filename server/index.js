@@ -6,7 +6,9 @@ const typeDefs = require('./graphql/typeDefs')
 const resolvers = require('./graphql/resolvers')  
 const cors = require('cors')
 const createPost = require('./controllers/post');
+const findPost = require('./controllers/Findpost.js');
 const verifyToken = require('./middlewares/auth');
+const follow = require('./controllers/user')
 
 const startServer = async()=>{
     const app = express()
@@ -14,10 +16,13 @@ const startServer = async()=>{
     app.use(cors())
 
     app.use(express.json())
-
+    
     app.get('/',(req,res)=>res.send('REST API WORKING'))
-
-    app.use('/createpost',verifyToken,createPost)
+    app.use('/api',findPost)
+    app.use('/api',createPost)
+    app.use('/api',verifyToken,follow)
+    // app.use('/createpost',verifyToken,createPost)
+    
 
     const server = new ApolloServer({
         typeDefs,

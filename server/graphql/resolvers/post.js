@@ -4,7 +4,7 @@ const User = require("../../model/User")
 const checkAuth = require('../../utils/auth')
 const slugify = require('slugify')
 module.exports = {
-    Query: { 
+    Query: {  
         getPosts: async () => {
             const post = await Post.find()
 
@@ -16,7 +16,7 @@ module.exports = {
         },
         getPost: async (_, { id }) => {
             const post = await Post.findById(id)
-            return post
+            return post 
         },
     },
     Mutation: {
@@ -110,17 +110,16 @@ module.exports = {
                     throw new AuthenticationError('Action not allowed')
                 }
             } else {
-                throw new UserInputError('Post Not Found')
+                throw new UserInputError('Post Not Found')  
             }
-        },
-        findPost :async(_,{username,slug})=>{
-             const post = await Post.findOne({username},{slug:{$elemMatch:{slug}}})
-            //  const post = await Post.findOne({slug})
-             return post
         },
         deleteUsers:async()=>{
              await User.deleteMany()
-             return 'All Users Deleted Successfully'
+             return 'All Users Deleted Successfully'   
+        } , 
+        SinglePost:async(_,{id})=>{
+            const post = await Post.findById(id)
+            return post  
         }
     }
 }

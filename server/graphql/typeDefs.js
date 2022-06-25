@@ -21,7 +21,8 @@ type Post{
        username:String!
        email:String!
        token:String! 
-       post:[ID]!
+       post:[ID]
+       followers:[ID]
    }
 
    type Comment {
@@ -48,7 +49,7 @@ type Post{
    }
    type Query{
        getPosts:[Post!]
-       getPost(id:ID!):Post!
+       getPost(id:ID!):Post!  
        deletePost:String!
        getUsers:[User]!
        getUser(username:String!):User!
@@ -62,11 +63,11 @@ type Post{
        createComment(postid:ID!,body:String!):Post
        deletePost(postid:ID!):String!
        deleteComment(postId:ID!,commentId:ID!):String! 
-       findPost(slug:String!,username:String!):Post! 
+       SinglePost(id:ID!):Post
        deleteUsers:String!
-       createPost(body:String,title:String!,coverPhoto:String!):Post!
-       
-   }
-   
-   
+       createPost(body:String,title:String!,coverPhoto:String!):Post!  
+       findUser(username:String!):User
+       deleteUser(username:String!):String
+       followUser(id:ID!):User
+   } 
 `
