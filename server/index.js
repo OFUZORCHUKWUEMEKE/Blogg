@@ -1,4 +1,5 @@
 const {ApolloServer} = require('apollo-server-express')
+const { PubSub } =require('graphql-subscriptions') ;
 const express = require('express')
 const mongoose  = require('mongoose')
 const {MONGODB,SECRET_KEY} = require('./utils/config');
@@ -9,6 +10,8 @@ const createPost = require('./controllers/post');
 const findPost = require('./controllers/Findpost.js');
 const verifyToken = require('./middlewares/auth');
 const follow = require('./controllers/user')
+
+const pubsub = new PubSub();
 
 const startServer = async()=>{
     const app = express()

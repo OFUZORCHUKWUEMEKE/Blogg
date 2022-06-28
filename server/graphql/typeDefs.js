@@ -13,6 +13,8 @@ type Post{
        likes:[Like]!
        slug:String!
        createdAt:String!
+       likeCount: Int
+    commentCount: Int
        coverPhoto:String!
        isPublished:Boolean!   
    }
@@ -23,10 +25,11 @@ type Post{
        token:String! 
        post:[ID]
        followers:[ID]
+       following:[ID]
    }
 
    type Comment {
-    id: ID!
+    id: ID!  
     createdAt: String!
     username: String!
     body: String!
@@ -59,15 +62,15 @@ type Post{
        login(email:String!,password:String!):User!
        register(username:String!,email:String!,password:String!,conFirmPassword:String!):User!
        userPosts(id:ID!):[Post]!
-       likePost(postid:ID!):Post!
+       likePost(postId: ID!): Post!
        createComment(postid:ID!,body:String!):Post
        deletePost(postid:ID!):String!
        deleteComment(postId:ID!,commentId:ID!):String! 
        SinglePost(id:ID!):Post
        deleteUsers:String!
-       createPost(body:String,title:String!,coverPhoto:String!):Post!  
+       createPost(body:String!,title:String!,coverPhoto:String!):Post!  
        findUser(username:String!):User
        deleteUser(username:String!):String
-       followUser(id:ID!):User
+       followUser(userId:ID,user:ID):User
    } 
 `

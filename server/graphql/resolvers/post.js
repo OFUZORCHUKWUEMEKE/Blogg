@@ -3,6 +3,9 @@ const Post = require("../../model/Post")
 const User = require("../../model/User")
 const checkAuth = require('../../utils/auth')
 const slugify = require('slugify')
+const { PubSub } =require('graphql-subscriptions') ;
+
+const pubsub = new PubSub();
 module.exports = {
     Query: {  
         getPosts: async () => {
@@ -24,26 +27,26 @@ module.exports = {
             const userPost = await Post.find({ user: { $elemMatch: { $eq: id } } })
             return userPost
         },
-        likePost: async (_, { postid }, context) => {
-            const { username } = checkAuth(context)
-            if (!username) { 
-                throw new AuthenticationError('You are not Authenticated')
-            }
-            const poste = await Post.findById(postid)
-            const post = await Post.findOne({ _id: postid }, { likes: { $elemMatch: { username: username } } })
-
-            if (post.likes.length === 0){
-                const like = {
-                    username: username,
-                    createdAt: new Date().toISOString()
-                }
-                const liked = await Post.findByIdAndUpdate(postid, { $push: { likes: like } })
-
-            } else {
-                const liked = await Post.findByIdAndUpdate(postid, { $pull: { likes: { username: username } } })
-                console.log(liked)
-            }
-            return poste 
+        async likePost(_, { postId }, context) {
+            const { username } = checkAuth(context);
+      
+            const post = await Post.findById(postId);
+            if (post) {
+              if (post.likes.find((like) => like.username === username)) {
+                // Post already likes, unlike it
+                post.likes = post.likes.filter((like) => like.username !== username);
+              } else {
+                // Not liked, like post
+                post.likes.push({
+                  username,
+                  createdAt: new Date().toISOString()
+                });
+              }
+      
+              await post.save();
+              return post;
+            } else throw new UserInputError('Post not found');
+          }
         },
         createPost: async (_, { body, title, coverPhoto }, context) => {
             const { username } = checkAuth(context)
@@ -53,22 +56,23 @@ module.exports = {
             }
             const slug = slugify(title)
 
-            const post = new Post({
+            const newPost  = new Post({
                 body,
                 slug,
                 title,
                 createdAt:new Date().toISOString(),
                 username: username,
-                coverPhoto
+                coverPhoto,
+                
             })
-            await post.save()
-           
-             const result = await User.findOneAndUpdate({username},{$push:{post}})
-            console.log(result)         
+          
+            const post = await newPost.save();
+            const result = await User.findOneAndUpdate({username},{$push:{post}})
+            console.log(result)
           return post 
         },
         createComment: async (_, { postid, body }, context) => {
-            const { username } = checkAuth(context)
+            const { username } = checkAuth(context) 
             const comment = {
                 username, body, createdAt: new Date().toDateString()
             }
@@ -120,6 +124,10 @@ module.exports = {
         SinglePost:async(_,{id})=>{
             const post = await Post.findById(id)
             return post  
-        }
+        },
+        // Subscription: {
+        //     newPost: {
+        //       subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_POST')
+        //     }
+        //   }
     }
-}

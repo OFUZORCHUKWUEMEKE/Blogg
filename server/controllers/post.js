@@ -19,13 +19,12 @@ router.post('/', asyncHandler(async (req, res) => {
         })
         res.json(post)
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error)  
     }
 
 }))
-
-router.get('/username', asyncHandler(async (req, res) => {
    
+router.get('/username', asyncHandler(async (req, res) => { 
     const { username } = req.query
     const user = await User.findOne({ username }).populate('post')
     res.status(200).json(user)

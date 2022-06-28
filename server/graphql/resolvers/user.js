@@ -19,7 +19,9 @@ module.exports = {
     Query: {
         getUsers : async()=>{
             const Users = await User.find()
+            console.log(Users)
             return Users
+            
         },
         getUser:async(_,{username})=>{
             const Users = await User.findOne({username})
@@ -102,12 +104,26 @@ module.exports = {
             const user = await User.deleteOne({username})
             return 'Successfully Deleted'     
         },
-        // followUser:async(_,{id},context)=>{
-        //     const username = checkAuth(context)
-        //     if(!username){
-        //         throw new AuthenticationError('You are not authenticated')
-        //     }
-
-        // }
+        followUser:async(_,{userId,user},context)=>{
+               const {username} = checkAuth(context)
+               const userr = await User.findById(user)
+               if(user.followers.find(follower=>follower.username===username)){
+                   userr.followers.filter(follower!==username)
+               }else{
+                   userr.followers.push({
+                       username,
+                       createdAt:new Date.toString()
+                   })
+               }
+               await userr.save()
+               return{
+                username: user.username,
+                email: user.email, 
+                id: user._id,
+                token: user.token,
+                post:arr,
+                followers:user.followers     
+               }  
+        }
     }
 }
