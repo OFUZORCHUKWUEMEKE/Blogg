@@ -8,6 +8,7 @@ const resolvers = require('./graphql/resolvers')
 const cors = require('cors')
 const createPost = require('./controllers/post');
 const verifyToken = require('./middlewares/auth');
+const findpost = require('./controllers/findpost.js')
 
 const pubsub = new PubSub();
 
@@ -20,7 +21,11 @@ const startServer = async()=>{
 
     app.get('/',(req,res)=>res.send('REST API WORKING'))
 
-    app.use('/createpost',verifyToken,createPost)
+    app.use('/api',findpost)
+    
+    app.use('/api',verifyToken,createPost)  
+
+  
 
     const server = new ApolloServer({
         typeDefs,
@@ -34,8 +39,6 @@ const startServer = async()=>{
     await server.start()
     
     server.applyMiddleware({app})  
-     
-   
 
     mongoose.connect(MONGODB,async()=>{ 
         app.listen(4000,()=>console.log('Server listening On Port 4000')) 

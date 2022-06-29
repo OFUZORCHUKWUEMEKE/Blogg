@@ -16,13 +16,28 @@ type Post{
        coverPhoto:String!
        isPublished:Boolean!   
    }
+   type Followers{
+    id: ID!
+    createdAt: String!
+    username: String!  
+   }
+
+   type Following{
+    id: ID!
+    createdAt: String!
+    username: String!  
+   }
    type User{
        id:ID!
        username:String!
        email:String!
        token:String! 
-       post:[ID]!
+       post:[ID]
+       followers:[Followers]
+       following:[Following]
    }
+
+   
 
    type Comment {
     id: ID!  
@@ -47,10 +62,10 @@ type Post{
        coverPhoto:String!
    }
    type Query{
-       getPosts:[Post!]
+       getPosts:[Post]
        getPost(id:ID!):Post!
        deletePost:String!
-       getUsers:String!
+       getUsers:[User]
        getUser(username:String!):User!
    }
 
@@ -64,9 +79,9 @@ type Post{
        deleteComment(postId:ID!,commentId:ID!):String! 
        findPost(slug:String!,username:String!):Post! 
        deleteUsers:String!
-       createPost(body:String,title:String!,coverPhoto:String!):Post!
-       
-   }
-   
-   
+       createPost(body:String!,title:String!,coverPhoto:String!):Post! 
+       findUser(username:String!):User
+       deleteUser(username:String!):String
+       followUser(userId:ID,user:ID):User
+   } 
 `

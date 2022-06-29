@@ -42,7 +42,6 @@ module.exports = {
                   createdAt: new Date().toISOString()
                 });
               }
-      
               await post.save();
               return post;
             } else throw new UserInputError('Post not found');
@@ -64,15 +63,13 @@ module.exports = {
                 createdAt:new Date().toISOString(),
                 username: username,
                 coverPhoto,
-                
-            })
-
-          
+            })  
+            if(!newPost) throw new Error('Post not found')      
             const post = await newPost.save()
             console.log(post);
             const result = await User.findOneAndUpdate({username},{$push:{post}})
             console.log(result)
-          return post 
+          return post
         },
         createComment: async (_, { postid, body }, context) => {
             const { username } = checkAuth(context) 
