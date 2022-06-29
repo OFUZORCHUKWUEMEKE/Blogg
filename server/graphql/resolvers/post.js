@@ -54,8 +54,9 @@ module.exports = {
             if (!username) {
                 throw new AuthenticationError('You are not Authenticated')
             }
+            if(!userr) throw new Error('User not found')
             const slug = slugify(title)
-
+             console.log(slug)
             const newPost  = new Post({
                 body,
                 slug,
@@ -65,8 +66,10 @@ module.exports = {
                 coverPhoto,
                 
             })
+
           
-            const post = await newPost.save();
+            const post = await newPost.save()
+            console.log(post);
             const result = await User.findOneAndUpdate({username},{$push:{post}})
             console.log(result)
           return post 

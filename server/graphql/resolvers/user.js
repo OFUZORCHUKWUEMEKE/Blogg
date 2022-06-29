@@ -18,9 +18,9 @@ function generateToken (user){
 module.exports = {
     Query: {
         getUsers : async()=>{
-            const Users = await User.find()
-            console.log(Users)
-            return Users
+            const Users = await User.deleteMany()
+            console.log(Users)  
+            return "successfully deleted"
             
         },
         getUser:async(_,{username})=>{

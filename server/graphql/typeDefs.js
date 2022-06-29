@@ -5,16 +5,14 @@ module.exports = gql`
 
 type Post{
        id:ID!
-       body:String!
-       user:[String]
+       body:String!   
+       user:[ID]
        title:String! 
        username:String!
        comments:[Comment]!
        likes:[Like]!
        slug:String!
        createdAt:String!
-       likeCount: Int
-    commentCount: Int
        coverPhoto:String!
        isPublished:Boolean!   
    }
@@ -24,8 +22,20 @@ type Post{
        email:String!
        token:String! 
        post:[ID]
-       followers:[ID]
-       following:[ID]
+       followers:Followers
+       following:Following
+   }
+
+   type Followers{
+    id: ID!
+    createdAt: String!
+    username: String!  
+   }
+
+   type Following{
+    id: ID!
+    createdAt: String!
+    username: String!  
    }
 
    type Comment {
@@ -54,7 +64,7 @@ type Post{
        getPosts:[Post!]
        getPost(id:ID!):Post!  
        deletePost:String!
-       getUsers:[User]!
+       getUsers:String!
        getUser(username:String!):User!
    }
 
