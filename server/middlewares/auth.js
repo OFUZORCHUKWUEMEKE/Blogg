@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken')
 const { SECRET_KEY } = require('../utils/config')
 
 const verifyToken = asyncHandler(async(req,res,next)=>{
-    const auth = req.headers.authorization
+    const auth = req.headers.authorization 
+    
     if(!auth){ 
         throw new Error("You are not Authenticated")
     }   

@@ -10,7 +10,6 @@ module.exports = {
     Query: { 
         getPosts: async () => {
             const post = await Post.find()
-
             return post
         },
         deletePost:async()=>{

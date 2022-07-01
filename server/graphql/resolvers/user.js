@@ -102,26 +102,12 @@ module.exports = {
             const user = await User.deleteOne({username})
             return 'Successfully Deleted'     
         },
-        followUser:async(_,{userId,user},context)=>{
-               const {username} = checkAuth(context)
-               const userr = await User.findById(user)
-               if(user.followers.find(follower=>follower.username===username)){
-                   userr.followers.filter(follower!==username)
-               }else{
-                   userr.followers.push({
-                       username,
-                       createdAt:new Date.toString()
-                   })
-               }
-               await userr.save()
-               return{
-                username: user.username,
-                email: user.email, 
-                id: user._id,
-                token: user.token,
-                post:arr,
-                followers:user.followers     
-               }  
+        followUser:async(_,{userId},context)=>{
+           const {username} = checkAuth(context)
+           const user = await User.findById(userId)
+           if(user.followers.find(follower=>follower.username===username)){
+               user.followers = user.followers.filter(follower=>follower.username!==username)
+           }
         }
     }
 }

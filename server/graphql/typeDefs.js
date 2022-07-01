@@ -82,6 +82,6 @@ type Post{
        createPost(body:String!,title:String!,coverPhoto:String!):Post! 
        findUser(username:String!):User
        deleteUser(username:String!):String
-       followUser(userId:ID,user:ID):User
+       followUser(userId:ID):User
    } 
 `
