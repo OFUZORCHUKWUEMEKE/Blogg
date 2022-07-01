@@ -1,4 +1,3 @@
-
 export const BlogReducer = (state,action)=>{
    switch(action.type){
        case 'ADD':
@@ -7,6 +6,6 @@ export const BlogReducer = (state,action)=>{
               data:action.payload
            }
         default:
-            return state   
+            return state  
    }
 }

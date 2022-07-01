@@ -10,6 +10,7 @@ import { BlogContext } from '../BlogContext';
 import useFetch from '../useFetch';
 import './blog.css'
 import Footer from '../components/footer';
+import '../pages/Home.css'
 
 export function Animations() {
     return (
@@ -29,7 +30,7 @@ const Blogpage = () => {
     const navigate = useNavigate()
     const { dispatch, state } = useContext(BlogContext)
     const { data: blog, error, isPending } = useFetch(`http://localhost:4000/api/findpost/?id=${id}`);
-
+    console.log(blog)
     return (
         <div className="blog-details">
             {isPending && <>
@@ -40,7 +41,6 @@ const Blogpage = () => {
                             <div className='space-x-6 flex flex-row items-center'>
                                 <h1 className='text-[20px] font-bold text-white'><Skeleton animation="wave" /></h1>
                                 <Avatar alt="frank" />
-                                <span className='text-white bg-[#171d24] p-3 rounded-md cursor-pointer'>Follow</span>
                             </div>
                         </div>
                     </nav>
@@ -66,30 +66,29 @@ const Blogpage = () => {
             {error && <div>{error}</div>}
             {blog && (
                 <>
-                    <div className='bg-[#171d24] min-h-screen overflow-hidden'>
-                        <nav className='bg-[#1F2937] p-3'>
+                    <div className='bg-[#171d24] min-h-screen overflow-hidden emeke'>
+                        {/* <nav className='bg-[#1F2937] p-3'>
                             <div className='flex w-[95%] md:w-[70%] mx-auto flex-row justify-between items-center'>
                                 <Link to='/'><h1 className='text-white font-mono font-bold'>Blogg</h1></Link>
                                 <div className='space-x-6 flex flex-row items-center'>
-                                    <h1 className='text-[20px] font-bold text-white'>@{blog?.username}</h1>
+                                   <Link to={`/${blog?.username}`}><h1 className='text-white text-[20px]'>{blog?.username}</h1></Link>
                                     <Avatar alt="frank" />
-                                    <span className='text-white bg-[#171d24] p-3 rounded-md cursor-pointer'>Follow</span>
+                                   
                                 </div>
                             </div>
-                        </nav>
+                        </nav> */}
                         <div className='w-4/5 md:3/5 mx-auto py-3 mb-3'>
                             <Stack spacing={3}>
-                                <img src={blog?.coverPhoto} className='w-full h-[400px] object-cover' />
-                                <h1 className='text-center font-bold text-[30px] text-white'>{blog?.title}</h1>
+                                <img src={blog?.coverPhoto} className='w-full h-[400px] object-cover' />   
+                                <h3 className='text-center font-bold text-[30px] text-white'>{blog?.title}</h3>                           
                                 <div>
                                     <Stack direction="row" spacing={6} justifyContent='center' alignItems='center'>
                                         <div className='flex items-center space-x-4'>
-                                            <Avatar alt={blog?.username} />
-                                            <Link to={`/${blog?.username}`}><h1 className='text-white text-[20px]'>{blog?.username}</h1></Link>
+                                            <Link to={`/${blog?.username}`}><h5 className='text-white text-[20px]'> Written By {blog?.username}</h5></Link>
                                         </div>
-                                        <h2 className='text-white'>{new Date().toLocaleDateString()}</h2>
-
+                                        {/* <h2 className='text-white'>{new Date().toLocaleDateString()}</h2>                            */}
                                     </Stack>
+                                 
                                     <div dangerouslySetInnerHTML={{ __html: blog?.body }} className='text-white break-all py-2 blog w-full md:w-4/5 mx-auto'>
 
                                     </div>

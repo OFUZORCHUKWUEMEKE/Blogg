@@ -29,7 +29,7 @@ const CreatePost = () => {
     const { dispatch, state } = useContext(EditorContext)
 
     const { html } = state
-
+    const [token,setToken] = useState(JSON.parse(localStorage.getItem('token')))
     const [create, { loading, error, data }] = useMutation(CREATEPOST, {
         update(_, { data }) {
             console.log(data)
@@ -49,7 +49,7 @@ const CreatePost = () => {
     const uploadImage = async (e) => {
         const file = e.target.files[0]
         const form = new FormData()
-        form.append('file', file)
+        form.append('file', file)  
         form.append('upload_preset', "pxfidyxe")
         try {
             setLoading(true)
@@ -63,9 +63,28 @@ const CreatePost = () => {
     }
 
     const Submit = async () => {
-        offloader(true)
-        await create()
-        await offloader(false)
+        try {
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              }  
+              offloader(true)
+            const res = await axios.post('http://localhost:4000/api/createpost',{body: html, title: title, coverPhoto: url},{headers:headers})
+            toast.success('Successfully Saved to Drafts', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            await offloader(false)
+        } catch (error) {
+            console.log(error.response)
+            await offloader(false)
+        }
+      
     }
     return (
         <>

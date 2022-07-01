@@ -8,6 +8,7 @@ import { gql, useQuery } from '@apollo/client'
 import Facebook from '../components/Loading'
 import RecipeReviewCard from '../components/Card'
 import MediaCard from '../components/Card'
+import './Home.css'
 
 const Home = () => {
     const { loading, data: { getPosts: posts } = {},error } = useQuery(FETCHPOST)
@@ -15,12 +16,12 @@ const Home = () => {
     console.log(posts)
 
     if(loading || error) return (
-        <div className='bg-[#171d24] min-h-screen'>
+        <div className='bg-[#171d24] min-h-screen emeke'>
         <div>
             <Navbar />
             <div className='w-[90%] mx-auto grid place-items-center h-[80vh]'>
                 <Grid container spacing={3} justifyContent='space-between' alignItems='center'>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={6}>  
                         <div>
                             <Stack spacing={3}>
                                 <h1 className='text-white text-[40px]'>A Social <span className='text-[#3366ff]'>Blogging</span> Platform</h1>
@@ -28,7 +29,7 @@ const Home = () => {
                                 <h3 className='text-white text-[23px]'>Share Your Experience / Journey</h3>
                                 <Link to='/register'><span className='rounded-[50px] mb-4  cursor-pointer py-3 px-6 bg-[#3466f6] text-center text-white w-[30%]'>Get Started</span></Link>
                             </Stack>   
-                        </div>
+                        </div>  
                     </Grid> 
                     <Grid item xs={12} md={6}>
                         <img src="/img/home.svg" className='object-cover' />
@@ -62,8 +63,8 @@ const Home = () => {
                 </Grid>
             </Grid>
         </div>
-        <div className='p-6'>
-            <div className='w-4/5 mx-auto rounded-md  bg-[#212c39] px-5 py-10'>
+        <div className='p-6'>  
+            <div className='w-4/5 mx-auto rounded-md  bg-[#212c39] px-5 py-10'>  
                 <Stack spacing={3} justifyContent='space-around' className='text-center'>
                     <h1 className='font-bold text-[32px] font-mono text-white'>Coming Soon</h1>
                     <h1 className='font-bold text-[32px] font-mono text-white'>Blogg For <span className='text-[#3366ff]'>Teams</span></h1>
@@ -74,10 +75,9 @@ const Home = () => {
         <Footer />
     </div>
     )
-
     return (
         <>
-            <div className='bg-[#171d24] min-h-screen'>
+            <div className='bg-[#171d24] min-h-screen emeke'>
                 <div>
                     <Navbar />
                     <div className='w-[90%] mx-auto grid place-items-center h-[80vh]'>

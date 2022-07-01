@@ -5,6 +5,7 @@ import { AuthContext } from '../AuthProvider'
 // import { Link } from 'react-router-dom'
 import Inputed from './Input'
 import BasicModal from './Modal'
+import '../pages/Home.css'
 
 
 const Navbar = () => {
@@ -21,9 +22,9 @@ const Navbar = () => {
   }
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  return (
+  return (  
     <>
-      <nav className='bg-[#1F2937] p-2' >
+      <nav className='bg-[#1F2937] p-2 emeke' >
         <div className='flex w-[90%] mx-auto flex-row justify-between'>
           <div className='space-x-4 flex items-center'>         
             <Link to='/'><h1 className='text-white font-mono font-bold'>Blogg</h1></Link>
@@ -34,7 +35,7 @@ const Navbar = () => {
               <Link to="/create"> <span className='rounded-[50px] cursor-pointer py-3 px-6 bg-[#3466f6] text-white '>Write</span></Link>             
               <span className='text-white bg-[#171d24] py-3 px-6 rounded-md'>Hello {user.username}</span>
               <span onClick={logout} className='text-white bg-[#3466f6] cursor-pointer py-3 px-6 rounded-[50px]'>Logout</span>
-            </div> 
+            </div>
           ):(
             <div className='space-x-6 flex items-center'>
                <BasicModal/>
@@ -63,7 +64,7 @@ const FETCHPOST = gql`
       username
     }
     slug
-  }
+  }  
   }
 `
 export default Navbar;
