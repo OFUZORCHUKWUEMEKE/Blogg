@@ -4,12 +4,14 @@ const User = require("../../model/User")
 const checkAuth = require('../../utils/auth')
 const slugify = require('slugify')
 const { PubSub } =require('graphql-subscriptions') ;
+const moment = require('moment'); 
 
 const pubsub = new PubSub();
 module.exports = {
     Query: { 
         getPosts: async () => {
-            const post = await Post.find()
+            const post = await Post.find().sort({"createdAt":-1})
+            // const post = await Post.deleteMany()
             return post
         },
         deletePost:async()=>{
@@ -34,7 +36,7 @@ module.exports = {
               if (post.likes.find((like) => like.username === username)) {
                 // Post already likes, unlike it
                 post.likes = post.likes.filter((like) => like.username !== username);
-              } else {
+              } else { 
                 // Not liked, like post
                 post.likes.push({
                   username,

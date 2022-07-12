@@ -17,7 +17,7 @@ const PostSchema = new mongoose.Schema({
         } 
     ], 
     likes:[
-        {
+        {  
             username:String,
             createdAt:String
         }

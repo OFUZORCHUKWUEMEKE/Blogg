@@ -6,6 +6,7 @@ const { hashPass, Encode, comparepass } = require("../../utils/functions")
 const { ApolloError, AuthenticationError, UserInputError } = require("apollo-server-express")
 const { SECRET_KEY } = require("../../utils/config")
 const checkAuth = require('../../utils/auth')
+const mailgun = require('mailgun-js')
 
 function generateToken (user){
     return  jwt.sign({
@@ -19,9 +20,9 @@ module.exports = {
     Query: {
         getUsers : async()=>{
             const Users = await User.find()
-            return Users 
+            return Users
         },
-        getUser:async(_,{username})=>{
+        getUser:async(_,{username})=>{ 
             const Users = await User.findOne({username})
             return Users 
         }

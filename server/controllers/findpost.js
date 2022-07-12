@@ -17,6 +17,23 @@ router.get('/username', asyncHandler(async (req, res) => {
     const user = await User.findOne({ username }).populate('post')
     res.status(200).json(user)
 }))
+const allUsers = asyncHandler(async(req,res)=>{
+    const keyword = req.query.search ?
+    {
+        $or:[
+            {
+                username:{$regex:req.query.search,$options:"i"}           
+            },
+            {
+               title:{$regex:req.query.search,$options:"i"}           
+           }
+
+        ]
+    } :{}
+    const posts = await Post.find(keyword).find({_id:{$ne:req.user.id}})
+    res.send(posts)  
+
+})
 
 
 

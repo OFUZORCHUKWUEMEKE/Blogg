@@ -20,7 +20,7 @@ type Post{
     id: ID!
     createdAt: String!
     username: String!  
-   }
+   }  
 
    type Following{
     id: ID!
@@ -35,6 +35,8 @@ type Post{
        post:[ID]
        followers:[Followers]
        following:[Following]
+       coverPhoto:String
+       bio:[ID]
    }
 
    

@@ -4,19 +4,23 @@ const slugify = require('slugify')
 const auth = require('../middlewares/auth')
 const Post = require('../model/Post')
 const User = require('../model/User')
+const moment = require('moment'); 
 
 router.post('/createpost', asyncHandler(async (req, res) => {
     const { body, title, coverPhoto } = req.body
     const { id, email, username } = req.user
     const slug = slugify(title)
     try {
+        // const user = await User.findById(id)
         const post = await Post.create({
             body,
             title, coverPhoto,
             username,
             slug,
-            createdAt: new Date().toISOString()
+            createdAt: moment().format('LL')
         })
+        await post.save()
+
         const result = await User.findOneAndUpdate({ username }, { $push: { post } })
         res.json(post)
     } catch (error) {
@@ -79,6 +83,7 @@ router.get("/follow", async (req, res) => {
     }
 })
 
+
 router.get('/findpost', asyncHandler(async (req, res) => {
     const post = await Post.findById(req.query.id)
     return res.status(200).json(post)
@@ -89,10 +94,30 @@ router.get('/getpost', asyncHandler(async (req, res) => {
     return res.status(200).json(post)
 }))
 
+router.get('/profile',asyncHandler(async(req,res)=>{
+    const {id,username} =req.user
+    const user = await User.findById(id)
+    return res.status(200).json(user)  
+}))
+
+
+router.post('/comments',asyncHandler(async(req,res)=>{
+    const {id} = req.query
+    const {body} = req.body
+    const {username} = req.user
+
+    try {
+        const post = await Post.findById(id)
+        post.comments.push({
+            body,
+            createdAt:Date.now().toLocaleString(),
+            username:username
+        })
+        await post.save()
+        return res.status(200).json(post)
+    } catch (error) {
+        console.log(error)
+    }
+   
+}))
 module.exports = router
-
-
-
-
-module.exports = router
-

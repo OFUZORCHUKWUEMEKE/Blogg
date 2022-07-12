@@ -9,9 +9,10 @@ const cors = require('cors')
 const createPost = require('./controllers/post');
 const verifyToken = require('./middlewares/auth');
 const findpost = require('./controllers/findpost.js')
+// const dotenv = require('dotenv').config()
 
 const pubsub = new PubSub();
-
+require('dotenv').config()
 const startServer = async()=>{
     const app = express()
 
@@ -39,9 +40,9 @@ const startServer = async()=>{
     await server.start()
     
     server.applyMiddleware({app})  
-
+    
     mongoose.connect(MONGODB,async()=>{ 
-        app.listen(4000,()=>console.log('Server listening On Port 4000')) 
+        app.listen(process.env.PORT || 4000,()=>console.log('Server listening On Port 4000'))
     })
 
 }
