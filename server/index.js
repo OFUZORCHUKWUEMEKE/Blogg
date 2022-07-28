@@ -14,7 +14,7 @@ const findpost = require('./controllers/findpost.js')
 const pubsub = new PubSub();
 require('dotenv').config()
 const startServer = async()=>{
-    const app = express()
+    const app = express()  
 
     app.use(cors())
 
